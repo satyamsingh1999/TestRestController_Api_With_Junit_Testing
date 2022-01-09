@@ -20,9 +20,16 @@ import com.selenium.express.service.StudentServiceImpl;
 @SpringBootTest
 class TestApplicationTests {
 
+	/**
+	 * this annotation is used to create mock object of class.
+	 */
 	@Mock
 	private StudentRepo dao;
 
+	/**
+	 * this annotation is used to create mock object and also inject dependancy if this class depends on
+	 * other class like it depend on dao. 
+	 */
 	@InjectMocks
 	private StudentServiceImpl service;
 

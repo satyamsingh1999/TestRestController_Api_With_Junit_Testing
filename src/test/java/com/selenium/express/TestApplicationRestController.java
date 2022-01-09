@@ -21,9 +21,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.selenium.express.dto.Student;
 import com.selenium.express.service.StudentServiceImpl;
 
+/**
+ * @author satyam
+ *     @WebMvcTest annotation is used to test SpringMvc use case 
+ */
 @WebMvcTest
 public class TestApplicationRestController {
 
+	/**
+	 * This annotation is used to create mock object of particular class or field
+	 */
 	@MockBean
 	private StudentServiceImpl studentService;
 
@@ -34,13 +41,18 @@ public class TestApplicationRestController {
 	public void testSaveStudent() throws Exception {
 
 		Student student = new Student(1, "Abhilash", "Panigrahi", "Blr");
-		ObjectMapper objectMapper = new ObjectMapper();
+		
+		// ObjectMapper class is used to convert Java object into Json and vis versa .
+		ObjectMapper objectMapper = new ObjectMapper();  
+		
+		// writeValueAsString() is used to convert java to json and readValue() to convert json to string.
 		String studentJson = objectMapper.writeValueAsString(student);
 
 		when(studentService.addStudent(ArgumentMatchers.any())).thenReturn(student);
 
+		//giving type of object coming from client and also giving method url.
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/student/save")
-				.contentType(MediaType.APPLICATION_JSON).content(studentJson);
+				.contentType(MediaType.APPLICATION_JSON).content(studentJson); 
 
 		ResultActions perform = mockMvc.perform(requestBuilder);
 		MvcResult result = perform.andReturn();
